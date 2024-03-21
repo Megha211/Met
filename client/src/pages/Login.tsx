@@ -162,6 +162,5 @@ const Login = () => {
     </AuthBox>
   );
 };
-// hudna
-// amritanshu
+// megha
 export default Login;
