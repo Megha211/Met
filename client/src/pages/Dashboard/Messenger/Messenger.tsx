@@ -6,7 +6,7 @@ import ChatDetails from "./ChatDetails";
 
 const MainContainer = styled("div")({
   flexGrow: 1,
-  backgroundColor: "#36393f",
+  backgroundColor: "#4A4AAE",
   display: "flex",
 });
 

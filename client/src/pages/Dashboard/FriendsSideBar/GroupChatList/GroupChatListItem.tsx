@@ -38,7 +38,8 @@ const GroupChatListItem = ({ chat }: GroupChatListItemProps) => {
                     textTransform: "none",
                     color: "black",
                     position: "relative",
-                    backgroundColor: isChatActive ? "#36393f" : "transparent",
+                    borderRadius: "10px",
+                    backgroundColor: isChatActive ? "rgba(255, 255, 255, 0.13)" : "transparent",
                 }}
             >
                 {/* {matches && <Avatar username={username} />} */}

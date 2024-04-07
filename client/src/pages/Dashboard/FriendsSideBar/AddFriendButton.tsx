@@ -16,27 +16,19 @@ const AddFriendButton = () => {
   return (
       <>
           <Button
-              variant="contained"
               sx={{
-                  bgcolor: "#5865F2",
-                  color: "white",
-                  textTransform: "none",
-                  fontSize: "16px",
-                  fontWeight: 500,
-                  // margin: "20px 0px",
-                  // marginTop: "10px",
-                  // marginLeft: "10px",
-                  width: "120px",
-                  height: "30px",
-                  background: "#3ba55d",
-                  // zIndex: 100,
-                  // position: "absolute",
-                  // top: "0",
-                  left: "0",
+                textTransform: "uppercase",
+                color: "white",
+                fontSize: "25px",
+                marginTop: "16px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                marginLeft: "45px" 
               }}
               onClick={handleOpenAddFriendDialog}
           >
-              Add friend
+            +
           </Button>
           <AddFriendDialog
               isDialogOpen={isDialogOpen}

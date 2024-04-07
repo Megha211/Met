@@ -41,10 +41,12 @@ export default function ResponsiveDrawer(props: Props) {
     const drawer = (
         <div
             style={{
-                backgroundColor: "#2F3136",
+                backgroundColor: "#3b3486",
                 height: "100%",
                 overflowY: "auto",
                 padding: "5px 15px",
+                borderRadius: "0 20px 20px 0",
+                // borderRight: "1px solid #3b34",
             }}
         >
             <div
@@ -52,37 +54,54 @@ export default function ResponsiveDrawer(props: Props) {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    margin: "10px 0",
+                    // margin: "10px 0",
                 }}
             >
-                <AddFriendButton />
+                <h2 style={{
+                    color: "white",
+                    fontWeight: "bold",
+                    textTransform: "uppercase"
+                }}>Dashboard</h2>
                 <DropDownMenu />
             </div>
             <Divider />
-            <div
-                style={{
+            <div className="group">
+                <div className="group-head" style={{
                     display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-around",
-                    margin: "10px 0",
-                }}
-            >
-                <CreateGroupChatButton />
-                <CreateRoomButton isUserInRoom={props.isUserInRoom} />
+                    justifyContent: "space-between",
+                    width:"230px"
+                }}>    
+                    <FriendsTitle title="Active Rooms" />
+                    <CreateRoomButton isUserInRoom={props.isUserInRoom} />
+                </div>
+                <ActiveRooms />
             </div>
-            <FriendsTitle title="Active Rooms" />
-            <ActiveRooms />
             <Divider />
-            <FriendsTitle title="Private Messages" />
+            <div className="friend" style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width:"230px"
+            }}>    
+                <FriendsTitle title="Friends" />
+                <AddFriendButton />
+            </div>
             <FriendsList />
             <Divider />
-            <FriendsTitle title="Group Chats" />
-            <GroupChatList />
             <Divider />
             <FriendsTitle title="Invitations" />
             <PendingInvitationsList />
-
             <Divider />
+            <div className="group-chat">
+                <div className="group-chat-head" style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width:"230px"
+                }}>
+                    <FriendsTitle title="Group Chats" />
+                    <CreateGroupChatButton />
+                </div>
+                <GroupChatList />
+            </div>
         </div>
     );
 
@@ -138,6 +157,7 @@ export default function ResponsiveDrawer(props: Props) {
                         "& .MuiDrawer-paper": {
                             boxSizing: "border-box",
                             width: drawerWidth,
+                            backgroundColor: "#4a4aae",
                         },
                     }}
                     open

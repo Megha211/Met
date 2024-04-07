@@ -9,7 +9,7 @@ const FriendsTitle = ({ title }: { title: string }) => {
         <Typography
             sx={{
                 textTransform: "uppercase",
-                color: "#8e9297",
+                color: "white",
                 fontSize: "14px",
                 marginTop: "20px",
                 display: "flex",
@@ -17,7 +17,7 @@ const FriendsTitle = ({ title }: { title: string }) => {
                 gap: "10px",
             }}
         >
-            {title === "Private Messages" ? (
+            {title === "Friends" ? (
                 <MailIcon />
             ) : title === "Group Chats" ? (
                 <GroupsIcon />

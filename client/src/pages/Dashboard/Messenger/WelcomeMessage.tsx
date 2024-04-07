@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
-import Robot from "./robot.gif";
+import Robot from "./robot.gif"; // #6f61c0 #4a4aae #3b3486
 
 const Wrapper = styled("div")({
     flexGrow: 1,

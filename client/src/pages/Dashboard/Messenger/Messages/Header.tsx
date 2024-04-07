@@ -10,7 +10,7 @@ import { callRequest } from "../../../../socket/socketConnection";
 import ChatDropDown from "./ChatDropDown";
 
 const MainContainer = styled("div")({
-    width: "100%",
+    width: "98.5%",
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
@@ -48,7 +48,7 @@ const MessagesHeader: React.FC<{
 
     const {auth: {userDetails}, chat: {chosenChatDetails}, room: { isUserInRoom }} = useAppSelector((state) => state);
 
-    const navActiveStyle = scrollPosition >= navPosition! ? { backgroundColor: "#202225" } : { backgroundColor: "transparent" }; 
+    const navActiveStyle = scrollPosition >= navPosition! ? { backgroundColor: "#3b3486" } : { backgroundColor: "transparent" }; 
 
 
     return (

@@ -22,20 +22,18 @@ const Label = styled("p")({
   color: "#3b3486",
   textTransform: "uppercase",
   fontWeight: "600",
-  fontSize: "12px",
-  margin: "9px 0 5PX 0 ",
+  fontSize: "13px",
+  margin: "9px 0 5PX 2px ",
 });
 
 const Input = styled("input")({
-  flexGrow: 1,
-  height: "25px",
-  border: "1px solid black",
-  borderRadius: "2px",
-  color: "#6f61c0",
-  background: "#fff",
-
-  fontSize: "8px",
+  display: "block",
+  width: "100%",
+  height: "35px",
+  padding: "0 10px",
   outline: "none",
+  border: "1px solid #3b3486",
+  borderRadius: "10px",
 });
 
 const RedirectText = styled("span")({
@@ -146,18 +144,20 @@ const Register = () => {
             : "Enter correct email address. Password should be greater than six characters and username should be between 3 and 12 characters!"
         }
       >
-        <div>
+        <div style={{ display:"flex" , justifyContent:"center" }}>
           <Button
             variant="contained"
             sx={{
-              bgcolor: "#3b3486",
-              color: "#fff",
-              textTransform: "none",
-              fontSize: "16px",
-              fontWeight: 500,
+              display: "inline-block",
               width: "24vw",
-              height: "22px",
-              margin: "20px 0px",
+              margin: "15px 0 5px 25px",
+              color: "white",
+              fontSize: "16px",
+              letterSpacing: "1px",
+              cursor: "pointer",
+              background: "#3b3486",
+              borderRadius: "30px",
+              transition: ".3s"
             }}
             disabled={!isFormValid}
             onClick={handleRegister}
