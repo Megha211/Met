@@ -30,7 +30,7 @@ const register = async (req, res) => {
         //     userDoc.friends = [saalik._id]
         // }
 
-        // create user document and save in database
+        // // create user document and save in database
         const user = await User.create(userDoc);
 
         // if(saalik) {

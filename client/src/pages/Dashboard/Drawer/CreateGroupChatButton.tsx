@@ -16,7 +16,7 @@ const CreateGroupChatButton = () => {
     return (
         <>
             <Button
-                onClick={handleOpenGroupChatDialog}
+                // onClick={handleOpenGroupChatDialog}
                 style={{
                     color: "white",
                     fontSize: "25px",
