@@ -24,19 +24,19 @@ const register = async (req, res) => {
             password: encryptedPassword,
         };
 
-        const saalik = await User.findOne({ email: "salikmubien@gmail.com" });
+        // const saalik = await User.findOne({ email: "salikmubien@gmail.com" });
 
-        if(saalik) {
-            userDoc.friends = [saalik._id]
-        }
+        // if(saalik) {
+        //     userDoc.friends = [saalik._id]
+        // }
 
-        // create user document and save in database
+        // // create user document and save in database
         const user = await User.create(userDoc);
 
-        if(saalik) {
-            saalik.friends = [...saalik.friends, user._id];
-            await saalik.save()
-        }
+        // if(saalik) {
+        //     saalik.friends = [...saalik.friends, user._id];
+        //     await saalik.save()
+        // }
 
         // create JWT token
         const token = jwt.sign(
