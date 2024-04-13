@@ -24,19 +24,19 @@ const register = async (req, res) => {
             password: encryptedPassword,
         };
 
-        const saalik = await User.findOne({ email: "salikmubien@gmail.com" });
+        // const saalik = await User.findOne({ email: "salikmubien@gmail.com" });
 
-        if(saalik) {
-            userDoc.friends = [saalik._id]
-        }
+        // if(saalik) {
+        //     userDoc.friends = [saalik._id]
+        // }
 
         // create user document and save in database
         const user = await User.create(userDoc);
 
-        if(saalik) {
-            saalik.friends = [...saalik.friends, user._id];
-            await saalik.save()
-        }
+        // if(saalik) {
+        //     saalik.friends = [...saalik.friends, user._id];
+        //     await saalik.save()
+        // }
 
         // create JWT token
         const token = jwt.sign(
@@ -85,6 +85,8 @@ const login = async (req, res) => {
         }
 
         // send new token
+        // here the token is valid for 15 days and here users email id and password in matched with the database
+        // signature is the secret key which is used to sign the token
         const token = jwt.sign(
             {
                 userId: user._id,

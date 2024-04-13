@@ -15,7 +15,9 @@ const PORT = process.env.PORT || 4000;
 
 const app = express();
 app.use(express.json());
+// parse the incoming request body as json
 app.use(cors());
+// cross origin resource sharing
 
 // register the routes
 app.use("/api/auth", authRoutes);
@@ -27,11 +29,13 @@ const server = http.createServer(app);
 // socket connection
 createSocketServer(server);
 
+// tenerary operator
 const MONGO_URI =
   process.env.NODE_ENV === "production"
     ? process.env.MONGO_URI
     : process.env.MONGO_URI_DEV;
 
+    // connecting mongodb
 mongoose
   .connect(MONGO_URI)
   .then(() => {
