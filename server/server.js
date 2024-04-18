@@ -19,6 +19,10 @@ app.use(express.json());
 app.use(cors());
 // cross origin resource sharing
 
+app.get("/", (req, res) => {
+  res.send("Hello, World!");
+});
+
 // register the routes
 app.use("/api/auth", authRoutes);
 app.use("/api/invite-friend", friendInvitationRoutes);
@@ -35,7 +39,7 @@ const MONGO_URI =
     ? process.env.MONGO_URI
     : process.env.MONGO_URI_DEV;
 
-    // connecting mongodb
+// connecting mongodb
 mongoose
   .connect(MONGO_URI)
   .then(() => {
