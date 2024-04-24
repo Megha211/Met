@@ -17,102 +17,97 @@ const roomLeaveHandler = require("../socketControllers/room/roomLeaveHandler");
 const roomSignalingDataHandler = require("../socketControllers/room/roomSignalingDataHandler");
 const roomInitializeConnectionHandler = require("../socketControllers/room/roomInitializeConnectionHandler");
 
-
 // createsocketserver object, takes an already created server object, io is the instance of the socket server object
 const createSocketServer = (server) => {
-    const io = socket(server, {
-        cors: {
-            // origin: ["http://localhost:3000", "https://met-tv.netlify.app"],
-            origin: ["https://met-sigma.vercel.app/"],
-            // allowed origins, request from these origins will be allowed
-            methods: ["GET", "POST"],
-        },
-    });
-    
-    // set the io instance as the global server socket 
-    setServerSocketInstance(io);
+  const io = socket(server, {
+    cors: {
+      // origin: ["http://localhost:3000", "https://met-tv.netlify.app"],
+      origin: ["https://met-sigma.vercel.app", "http://localhost:3000"],
+      // allowed origins, request from these origins will be allowed
+      methods: ["GET", "POST"],
+    },
+  });
 
-    // check authentication of user
-    io.use((socket, next) => {
-        requireSocketAuth(socket, next);
-    });
+  // set the io instance as the global server socket
+  setServerSocketInstance(io);
 
-    // kind of callback function, when a new connection is established
-    io.on("connection", (socket) => {
-        // console.log(socket.user)
-        console.log(`New socket connection connected: ${socket.id}`);
-        newConnectionHandler(socket, io);
+  // check authentication of user
+  io.use((socket, next) => {
+    requireSocketAuth(socket, next);
+  });
 
+  // kind of callback function, when a new connection is established
+  io.on("connection", (socket) => {
+    // console.log(socket.user)
+    console.log(`New socket connection connected: ${socket.id}`);
+    newConnectionHandler(socket, io);
 
-        socket.on("direct-message", (data) => {
-            directMessageHandler(socket, data);
-        })
-
-        socket.on("group-message", (data) => {
-            groupMessageHandler(socket, data);
-        });
-
-        socket.on("direct-chat-history", (data) => {
-            directChatHistoryHandler(socket, data.receiverUserId);
-        });
-
-        socket.on("group-chat-history", (data) => {
-            groupChatHistoryHandler(socket, data.groupChatId);
-        });
-
-
-        socket.on("notify-typing", (data) => {
-            notifyTypingHandler(socket, io, data);
-        });
-
-        socket.on("call-request", (data) => {
-            callRequestHandler(socket, data);
-        })
-
-        socket.on("call-response", (data) => {
-            callResponseHandler(socket, data);
-        })
-
-        socket.on("notify-chat-left", (data) => {
-            notifyChatLeft(socket, data);
-        });
-
-
-        // rooms 
-
-        socket.on("room-create", () => {
-            roomCreateHandler(socket);
-        });
-
-        socket.on("room-join", (data) => {
-            roomJoinHandler(socket, data);
-        });
-
-        socket.on("room-leave", (data) => {
-            roomLeaveHandler(socket, data);
-        });
-
-        socket.on("conn-init", (data) => {
-            roomInitializeConnectionHandler(socket, data);
-        });
-
-        socket.on("conn-signal", (data) => {
-            roomSignalingDataHandler(socket, data);
-        });
-
-        socket.on("disconnect", () => {
-            console.log(`Connected socket disconnected: ${socket.id}`);
-            disconnectHandler(socket, io);
-        });
+    socket.on("direct-message", (data) => {
+      directMessageHandler(socket, data);
     });
 
-    // emit online users to all connected users every 10 seconds
-    // setInterval(() => {
-    //     io.emit("online-users", getOnlineUsers());
-    // }, 10 * 1000)
+    socket.on("group-message", (data) => {
+      groupMessageHandler(socket, data);
+    });
+
+    socket.on("direct-chat-history", (data) => {
+      directChatHistoryHandler(socket, data.receiverUserId);
+    });
+
+    socket.on("group-chat-history", (data) => {
+      groupChatHistoryHandler(socket, data.groupChatId);
+    });
+
+    socket.on("notify-typing", (data) => {
+      notifyTypingHandler(socket, io, data);
+    });
+
+    socket.on("call-request", (data) => {
+      callRequestHandler(socket, data);
+    });
+
+    socket.on("call-response", (data) => {
+      callResponseHandler(socket, data);
+    });
+
+    socket.on("notify-chat-left", (data) => {
+      notifyChatLeft(socket, data);
+    });
+
+    // rooms
+
+    socket.on("room-create", () => {
+      roomCreateHandler(socket);
+    });
+
+    socket.on("room-join", (data) => {
+      roomJoinHandler(socket, data);
+    });
+
+    socket.on("room-leave", (data) => {
+      roomLeaveHandler(socket, data);
+    });
+
+    socket.on("conn-init", (data) => {
+      roomInitializeConnectionHandler(socket, data);
+    });
+
+    socket.on("conn-signal", (data) => {
+      roomSignalingDataHandler(socket, data);
+    });
+
+    socket.on("disconnect", () => {
+      console.log(`Connected socket disconnected: ${socket.id}`);
+      disconnectHandler(socket, io);
+    });
+  });
+
+  // emit online users to all connected users every 10 seconds
+  // setInterval(() => {
+  //     io.emit("online-users", getOnlineUsers());
+  // }, 10 * 1000)
 };
 
 module.exports = {
-    createSocketServer,
-}
-
+  createSocketServer,
+};
