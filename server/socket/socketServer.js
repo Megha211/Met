@@ -23,7 +23,7 @@ const createSocketServer = (server) => {
     const io = socket(server, {
         cors: {
             // origin: ["http://localhost:3000", "https://met-tv.netlify.app"],
-            origin: ["http://localhost:3000"],
+            origin: ["https://met-sigma.vercel.app/"],
             // allowed origins, request from these origins will be allowed
             methods: ["GET", "POST"],
         },
