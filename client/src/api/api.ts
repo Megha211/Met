@@ -11,7 +11,7 @@ import {
     DeleteGroupArgs,
 } from "./types";
 
-const BASE_URL = "http://localhost:4000"; 
+const BASE_URL = "https://met-hp74.onrender.com"; 
 // const BASE_URL = "https://saliks-discord.herokuapp.com/";
 // const BASE_URL = "https://talkhouse-server.onrender.com/"; 
 

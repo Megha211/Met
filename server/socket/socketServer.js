@@ -18,14 +18,18 @@ const roomSignalingDataHandler = require("../socketControllers/room/roomSignalin
 const roomInitializeConnectionHandler = require("../socketControllers/room/roomInitializeConnectionHandler");
 
 
+// createsocketserver object, takes an already created server object, io is the instance of the socket server object
 const createSocketServer = (server) => {
     const io = socket(server, {
         cors: {
-            origin: ["http://localhost:3000", "https://talkhouse-tv.netlify.app"],
+            // origin: ["http://localhost:3000", "https://met-tv.netlify.app"],
+            origin: ["http://localhost:3000"],
+            // allowed origins, request from these origins will be allowed
             methods: ["GET", "POST"],
         },
     });
-
+    
+    // set the io instance as the global server socket 
     setServerSocketInstance(io);
 
     // check authentication of user
@@ -33,6 +37,7 @@ const createSocketServer = (server) => {
         requireSocketAuth(socket, next);
     });
 
+    // kind of callback function, when a new connection is established
     io.on("connection", (socket) => {
         // console.log(socket.user)
         console.log(`New socket connection connected: ${socket.id}`);
@@ -110,3 +115,4 @@ const createSocketServer = (server) => {
 module.exports = {
     createSocketServer,
 }
+
