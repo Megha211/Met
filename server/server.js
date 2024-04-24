@@ -23,15 +23,8 @@ app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Credentials", true);
   next();
 });
-const corsOpts = {
-  origin: "*",
 
-  methods: ["GET", "POST"],
-
-  allowedHeaders: ["Content-Type"],
-};
-
-app.use(cors(corsOpts));
+app.use(cors());
 // cross origin resource sharing
 
 app.get("/", (req, res) => {
