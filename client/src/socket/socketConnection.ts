@@ -185,8 +185,8 @@ const setCurrentPeerConnection = (peerConnection: any) => {
 
 let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 
-// const SERVER_URL = "https://met-hp74.onrender.com";
-const SERVER_URL = "http://localhost:4000";
+const SERVER_URL = "https://met-hp74.onrender.com";
+// const SERVER_URL = "http://localhost:4000";
 const connectWithSocketServer = (userDetails: UserDetails) => {
   socket = io(SERVER_URL, {
     auth: {
