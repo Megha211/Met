@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const { login, register } = require("../controllers/auth.controller");
+const {
+  login,
+  register,
+  loginWithGoogle,
+} = require("../controllers/auth.controller");
 const Joi = require("joi");
 const validator = require("express-joi-validation").createValidator({});
 const requireAuth = require("../middlewares/requireAuth");
@@ -17,9 +21,20 @@ const loginSchema = Joi.object({
   email: Joi.string().email().required(),
 });
 
+const googleLoginSchema = Joi.object({
+  email: Joi.string().email().required(),
+  name: Joi.string().required(),
+});
+
 router.post("/register", validator.body(registerSchema), register);
 
 router.post("/login", validator.body(loginSchema), login);
+
+router.post(
+  "/login/google",
+  validator.body(googleLoginSchema),
+  loginWithGoogle
+);
 
 router.get("/me", requireAuth, (req, res) => {
   res.status(200).json({
