@@ -7,8 +7,15 @@ import { Tooltip } from "@mui/material";
 import Button from "@mui/material/Button";
 import AuthBox from "../components/AuthBox";
 import { validateLoginForm } from "../utils/validators";
-import { loginUser } from "../actions/authActions";
+import { loginUser, googleLogin } from "../actions/authActions";
 import { useAppSelector } from "../store";
+import { jwtDecode } from "jwt-decode";
+
+declare global {
+  interface Window {
+    google: any;
+  }
+}
 
 const Wrapper = styled("div")({
   display: "flex",
@@ -53,6 +60,40 @@ const Login = () => {
   const { error, errorMessage, userDetails } = useAppSelector(
     (state) => state.auth
   );
+  // asdasdasd
+
+  let handleCallbackResponse = (response: any) => {
+    console.log(response.credential);
+    let userObject = jwtDecode(response.credential) as {
+      email: string;
+      name: string;
+    }; // Add type annotation to userObject
+    console.log(userObject.name); // Access email property correctly
+
+    handleGoogleLogin({
+      email: userObject.email,
+      name: userObject.name,
+    });
+    document.getElementById("signInDiv")!.hidden = true;
+  };
+
+  useEffect(() => {
+    window.google.accounts.id.initialize({
+      client_id:
+        "932781667572-sqbo1hkehamdcfe9iv6np3pi9lokblh2.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
+
+    window.google.accounts.id.renderButton(
+      document.getElementById("signInDiv"),
+      {
+        theme: "outline",
+        size: "large",
+      }
+    );
+    window.google.accounts.id.prompt();
+  }, []);
+  // asidiosd
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredentials({
@@ -62,7 +103,12 @@ const Login = () => {
   };
 
   const handleLogin = () => {
+    console.log("credentials", credentials);
     dispatch(loginUser(credentials));
+  };
+
+  const handleGoogleLogin = (args: any) => {
+    dispatch(googleLogin(args));
   };
 
   useEffect(() => {
@@ -143,13 +189,43 @@ const Login = () => {
               cursor: "pointer",
               background: "#3b3486",
               borderRadius: "30px",
-              transition: ".3s"
+              transition: ".3s",
             }}
             disabled={!isFormValid}
             onClick={handleLogin}
           >
             Log In
           </Button>
+        </div>
+      </Tooltip>
+      <Tooltip
+        title={
+          isFormValid
+            ? "Proceed to Login"
+            : "Enter correct email address and password should be greater than six characters"
+        }
+      >
+        <div>
+          {/* <Button
+            variant="contained"
+            sx={{
+              display: "inline-block",
+              width: "24vw",
+              margin: "15px 0 5px 25px",
+              color: "white",
+              fontSize: "16px",
+              letterSpacing: "1px",
+              cursor: "pointer",
+              background: "#3b3486",
+              borderRadius: "30px",
+              transition: ".3s",
+            }}
+            disabled={!isFormValid}
+            onClick={handleLogin}
+          >
+            
+          </Button> */}
+          <div id="signInDiv"></div>
         </div>
       </Tooltip>
 
