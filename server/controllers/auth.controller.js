@@ -45,7 +45,7 @@ const register = async (req, res) => {
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "15d",
+        expiresIn: "1d",
       }
     );
 
