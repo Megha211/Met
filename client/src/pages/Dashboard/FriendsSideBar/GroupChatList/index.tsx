@@ -26,7 +26,7 @@ const GroupChatList = (props: FriendsListProps) => {
 
     return (
         <MainContainer>
-            {groupChatList.map((chat) => (
+            {searchGroupChats.map((chat) => (
                 <GroupChatListItem
                     chat={chat}
                     key={chat.groupId}
