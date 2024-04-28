@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { styled } from "@mui/system";
 import { useAppSelector } from "../../../store";
 import { notifyTyping, sendDirectMessage, sendGroupMessage } from "../../../socket/socketConnection";
+import { Button } from "@mui/material";
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
 
 const MainContainer = styled("div")({
     height: "60px",
@@ -9,6 +12,7 @@ const MainContainer = styled("div")({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    position: "relative", // Position relative for the container
 });
 
 const Input = styled("input")({
@@ -22,48 +26,84 @@ const Input = styled("input")({
     padding: "0 10px",
 });
 
+const EmojiPickerContainer = styled("div")({
+    position: "absolute",
+    bottom: "60px", 
+    right: "10px"
+});
+
 const NewMessageInput: React.FC = () => {
     const [message, setMessage] = useState("");
     const [focused, setFocused] = useState(false);
+    const [isPickerVisible, setPickerVisible] = useState(false);
+
+    const { chosenChatDetails, chosenGroupChatDetails } = useAppSelector((state) => state.chat);
+
+    const emojiPickerRef = useRef<HTMLDivElement>(null);
 
     const onFocus = () => setFocused(true);
     const onBlur = () => setFocused(false);
 
-    const { chosenChatDetails, chosenGroupChatDetails } = useAppSelector((state) => state.chat);
-
-
-
     const handleSendMessage = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        
         if (e.key === "Enter") {
-            
-            if(chosenChatDetails) {
+            if (chosenChatDetails) {
                 sendDirectMessage({
                     message,
                     receiverUserId: chosenChatDetails.userId!,
                 });
             }
-            
-            if(chosenGroupChatDetails) {
+
+            if (chosenGroupChatDetails) {
                 sendGroupMessage({
                     message,
                     groupChatId: chosenGroupChatDetails.groupId
-                })
+                });
             }
-
 
             setMessage("");
         }
     };
 
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMessage(e.target.value)
     };
 
+    const handleTogglePicker = () => {
+        if (isPickerVisible) {
+            setPickerVisible(false);
+        } else {
+            setPickerVisible(true);
+        }
+    };    
+    
+    const handleEmojiSelect = (emojiObject: any) => {
+        const emoji = emojiObject.native;
+        setMessage(prevMessage => prevMessage + emoji);
+        setPickerVisible(false); // Close the picker after selecting an emoji
+    };
+
+    const handleClickOutsidePicker = (event: MouseEvent) => {
+        const emojiButton = document.querySelector("#emojiButton"); // Assuming the button has an id "emojiButton"
+    
+        if (
+            emojiPickerRef.current &&
+            !emojiPickerRef.current.contains(event.target as Node) &&
+            event.target !== emojiButton
+        ) {
+            setPickerVisible(false);
+        }
+    };
+    
 
     useEffect(() => {
-        // notify the receiverUser that the user(sender) is typing
+        document.addEventListener("mousedown", handleClickOutsidePicker);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutsidePicker);
+        };
+    }, []);
+
+    useEffect(() => {
         if (chosenChatDetails?.userId) {
             notifyTyping({
                 receiverUserId: chosenChatDetails.userId!,
@@ -75,13 +115,24 @@ const NewMessageInput: React.FC = () => {
     return (
         <MainContainer>
             <Input
-                placeholder={chosenChatDetails  ? `Write message to ${chosenChatDetails.username}` : "Your message..."}
+                placeholder={chosenChatDetails ? `Write message to ${chosenChatDetails.username}` : "Your message..."}
                 value={message}
                 onChange={handleChange}
                 onKeyDown={handleSendMessage}
                 onFocus={onFocus}
                 onBlur={onBlur}
             />
+            <EmojiPickerContainer ref={emojiPickerRef}>
+                {isPickerVisible && (
+                    <Picker 
+                        data={data} 
+                        previewPosition="none" 
+                        onEmojiSelect={handleEmojiSelect} />
+                )}
+            </EmojiPickerContainer>
+            <Button id="emojiButton" onClick={handleTogglePicker} variant="contained" color="primary" style={{"backgroundColor":"black", height:"45px", margin: "5px"}}>
+                Emoji
+            </Button>
         </MainContainer>
     );
 };
