@@ -19,7 +19,7 @@ const FriendsSideBar = () => {
       <MainContainer sx={{ width: { xs: "30%", sm: "224px" } }}>
           <AddFriendButton />
           <FriendsTitle title="Private Messages" />
-          <FriendsList />
+          <FriendsList searchName=""/>
           <FriendsTitle title="Invitations" />
           <PendingInvitationsList />
       </MainContainer>

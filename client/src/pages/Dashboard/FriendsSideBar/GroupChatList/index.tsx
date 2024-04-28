@@ -10,8 +10,19 @@ const MainContainer = styled("div")({
     margin: "20px 0",
 });
 
-const GroupChatList = () => {
+interface FriendsListProps {
+    searchName: string; // Define the type of searchName prop
+}
+
+const GroupChatList = (props: FriendsListProps) => {
     const { groupChatList } = useAppSelector((state) => state.friends);
+
+    const searchGroupChats = groupChatList?.filter(friend => {
+        const username = friend.groupName.toLowerCase();
+        const searchName = props.searchName.toLowerCase();
+        
+        return username.includes(searchName);
+    });
 
     return (
         <MainContainer>

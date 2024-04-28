@@ -27,10 +27,21 @@ const MainContainer = styled("div")({
   margin: "20px 0"
 });
 
-const FriendsList = () => {
+interface FriendsListProps {
+  searchName: string; // Define the type of searchName prop
+}
+
+const FriendsList = (props: FriendsListProps) => {
   const { friends, onlineUsers } = useAppSelector(state => state.friends);
 
-  const modifiedFriends = friends.map(friend => {
+  const searchFriends = friends.filter(friend => {
+    const username = friend.username.toLowerCase();
+    const searchName = props.searchName.toLowerCase();
+    
+    return username.includes(searchName);
+  });
+
+  const modifiedFriends = searchFriends.map(friend => {
     const isOnline = onlineUsers.find(user => user.userId === friend.id);
 
     return {...friend, isOnline: !!isOnline};

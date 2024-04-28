@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
@@ -18,6 +18,10 @@ import CreateGroupChatButton from "./CreateGroupChatButton";
 import GroupChatList from "../FriendsSideBar/GroupChatList";
 import ActiveRooms from "../ActiveRooms";
 
+import SearchButton from "../FriendsSideBar/SearchChat/SearchButton";
+
+import { useAppSelector } from "../../../store";
+
 const drawerWidth = 240;
 
 interface Props {
@@ -33,6 +37,16 @@ interface Props {
 export default function ResponsiveDrawer(props: Props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
+
+    const {
+        room: { isUserInRoom }
+    } = useAppSelector((state) => state);
+
+    const [searchName, setSearchName] = useState(""); // State to hold the search value
+
+    const handleSearchChange = (value: string) => {
+        setSearchName(value); // Update the search value state
+    };
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -74,7 +88,20 @@ export default function ResponsiveDrawer(props: Props) {
                     <FriendsTitle title="Active Rooms" />
                     <CreateRoomButton isUserInRoom={props.isUserInRoom} />
                 </div>
-                <ActiveRooms />
+                {isUserInRoom && <ActiveRooms />}
+            </div>
+            <Divider />
+            <div className="search">
+                <div className="group-head" style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width:"230px"
+                }}>    
+                    <FriendsTitle title="Search Chat" />
+                    {/* <CreateRoomButton isUserInRoom={props.isUserInRoom} /> */}
+                </div>
+                {/* <ActiveRooms /> */}
+                <SearchButton onSearchChange={handleSearchChange}/>
             </div>
             <Divider />
             <div className="friend" style={{
@@ -85,7 +112,7 @@ export default function ResponsiveDrawer(props: Props) {
                 <FriendsTitle title="Friends" />
                 <AddFriendButton />
             </div>
-            <FriendsList />
+            <FriendsList searchName={searchName}/>
             <Divider />
             <Divider />
             <FriendsTitle title="Invitations" />
@@ -100,7 +127,7 @@ export default function ResponsiveDrawer(props: Props) {
                     <FriendsTitle title="Group Chats" />
                     <CreateGroupChatButton />
                 </div>
-                <GroupChatList />
+                <GroupChatList searchName={searchName}/>
             </div>
         </div>
     );
