@@ -7,7 +7,7 @@ import F1 from "../image/1.png";
 import F2 from "../image/2.png";
 import F3 from "../image/3.png";
 
-import { Translate } from "@mui/icons-material";
+import { Translate, Visibility } from "@mui/icons-material";
 
 interface AuthBoxProps {
   children?: ReactNode;
@@ -22,6 +22,63 @@ const BoxWrapper = styled("div")({
   background: "linear-gradient( to bottom, #d6cbf1, #8e92e3 )",
 });
 
+const Container = styled("div")({
+  background: "#f5f6f7",
+  height: "80px",
+  width: "290px",
+  borderRadius: "10px",
+  zIndex: "1",
+  position: "absolute",
+  top: "30%",
+  right: "12%",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  padding: "1.25%",
+  '@media (max-width:600px)': {
+    visibility: "hidden",
+  },
+});
+
+const Image = styled("img")({
+  height: "50px",
+  width: "50px",
+});
+
+const Title = styled("p")({
+  fontWeight: "700",
+  fontSize: "12px",
+});
+
+const Subtitle = styled("p")({
+  fontSize: "12px",
+});
+
+const IMG = styled("img")({
+  height: "100px",
+  width: "100px",
+  position: "absolute",
+  top: "12%",
+  left: "25%",
+  '@media (max-width:600px)': {
+    left: "39%",
+  },
+  zIndex: "2",
+});
+
+const Tagline = styled("p")({
+  fontWeight: "700",
+  marginTop: "0",
+  fontSize: "12px",
+  position: "absolute",
+  left: "23%",
+  top: "24%",
+  '@media (max-width:600px)': {
+    top : "25%",
+    left: "33%",
+  },
+});
+
 const AuthBox: React.FC<AuthBoxProps> = (props) => {
   return (
     <BoxWrapper>
@@ -33,30 +90,11 @@ const AuthBox: React.FC<AuthBoxProps> = (props) => {
           zIndex: "2",
         }}
       >
-        <img
+        <IMG
           src={LOGO}
           alt="hello"
-          style={{
-            height: "100px",
-            width: "100px",
-            position: "absolute",
-            top: "12%",
-            left: "25%",
-            zIndex: "2",
-          }}
         />
-        <p
-          style={{
-            fontWeight: "700",
-            marginTop: "0",
-            fontSize: "12px",
-            position: "absolute",
-            left: "23%",
-            top: "24%",
-          }}
-        >
-          Where Possibilities Meet Reality
-        </p>
+        <Tagline>Where Possibilities Meet Reality </Tagline>
       </div>
       <Box
         sx={{
@@ -65,6 +103,10 @@ const AuthBox: React.FC<AuthBoxProps> = (props) => {
           top: "29%",
           left: "14%",
           width: "30%",
+          '@media (max-width:600px)': {
+            width: "70%",
+            height: "55%",
+          },
           height: "50%",
           borderRadius: "50px",
           display: "flex",
@@ -111,147 +153,33 @@ const AuthBox: React.FC<AuthBoxProps> = (props) => {
           //   marginLeft: "10px",
         }}
       ></Box>
-      <div
-        style={{
-          background: "#f5f6f7",
-          height: "80px",
-          width: "290px",
-          borderRadius: "10px",
-          zIndex: "1",
-          position: "absolute",
-          top: "30%",
-          right: "12%",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          padding: "1.25%",
-        }}
-      >
+      <Container>
         <div>
-          <img
-            src={F1}
-            alt=""
-            style={{
-              height: "50px",
-              width: "50px",
-              // margin: "15px 2px",
-            }}
-          />
+          <Image src={F1} alt="" />
         </div>
         <div>
-          <p
-            style={{
-              fontWeight: "700",
-              fontSize: "12px",
-              // margin: " 12px 15px ",
-            }}
-          >
-            Express yourself beyond emojies
-          </p>
-          <p
-            style={{
-              fontSize: "12px",
-              // margin: "5px 15px",
-            }}
-          >
-            Why limit yourself with those 5 emojis, express freely with MET
-          </p>
+          <Title>Express yourself beyond emojies</Title>
+          <Subtitle>Why limit yourself with those 5 emojis, express freely with MET</Subtitle>
         </div>
-      </div>
-      <div
-        style={{
-          background: "#f5f6f7",
-          height: "80px",
-          width: "290px",
-          borderRadius: "10px",
-          zIndex: "1",
-          position: "absolute",
-          top: "47%",
-          right: "12%",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          padding: "1.25%",
-        }}
-      >
+      </Container>
+      <Container style={{ top: "47%" }}>
         <div>
-          <img
-            src={F2}
-            alt=""
-            style={{
-              height: "50px",
-              width: "50px",
-              // margin: "15px 2px",
-            }}
-          />
+          <Image src={F2} alt="" />
         </div>
         <div>
-          <p
-            style={{
-              fontWeight: "700",
-              fontSize: "12px",
-              // margin: " 12px 15px ",
-            }}
-          >
-            Personalized chill zone
-          </p>
-          <p
-            style={{
-              fontSize: "12px",
-              // margin: "5px 15px",
-            }}
-          >
-            Make your own private rooms with your beloved friends
-          </p>
+          <Title>Connect with the world</Title>
+          <Subtitle>Connect with people from all around the world</Subtitle>
         </div>
-      </div>
-      <div
-        style={{
-          background: "#f5f6f7",
-          height: "80px",
-          width: "290px",
-          borderRadius: "10px",
-          zIndex: "1",
-          position: "absolute",
-          top: "64%",
-          right: "12%",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          padding: "1.25%",
-        }}
-      >
+      </Container>
+      <Container style={{ top: "64%" }}>
         <div>
-          <img
-            src={F3}
-            alt=""
-            style={{
-              height: "50px",
-              width: "50px",
-              // margin: "15px 2px",
-            }}
-          />
+          <Image src={F3} alt="" />
         </div>
         <div>
-          <p
-            style={{
-              fontWeight: "700",
-              fontSize: "12px",
-              // margin: " 12px 15px ",
-            }}
-          >
-            Spice up your presentation
-          </p>
-          <p
-            style={{
-              fontSize: "12px",
-              // margin: "5px 15px",
-            }}
-          >
-            MET is designed to make your presentation as smooth as possible
-          </p>
+          <Title>Share your thoughts</Title>
+          <Subtitle>Share your thoughts with the world</Subtitle>
         </div>
-      </div>
+      </Container>
     </BoxWrapper>
   );
 };
