@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { styled } from "@mui/system";
 import { useAppSelector } from "../../../store";
 import { notifyTyping, sendDirectMessage, sendGroupMessage } from "../../../socket/socketConnection";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
+import SendIcon from '@mui/icons-material/Send';
 
 const MainContainer = styled("div")({
     height: "60px",
@@ -62,6 +63,24 @@ const NewMessageInput: React.FC = () => {
 
             setMessage("");
         }
+    };
+
+    const handleSendMessageButton = () => {
+        if (chosenChatDetails) {
+            sendDirectMessage({
+                message,
+                receiverUserId: chosenChatDetails.userId!,
+            });
+        }
+
+        if (chosenGroupChatDetails) {
+            sendGroupMessage({
+                message,
+                groupChatId: chosenGroupChatDetails.groupId
+            });
+        }
+
+        setMessage("");
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,6 +141,24 @@ const NewMessageInput: React.FC = () => {
                 onFocus={onFocus}
                 onBlur={onBlur}
             />
+            {/* <Button variant="contained" 
+                color="primary" 
+                onClick={handleSendMessageButton}
+                style={{"backgroundColor":"black", height:"45px", 
+                margin: "0px 0px 0px 5px", padding:"0px"}}  
+                startIcon={<SendIcon />}>
+                Send
+            </Button> */}
+
+            <IconButton
+                id="sendButton"
+                onClick={handleSendMessageButton}
+                aria-label="send"
+                style={{ color: "white", margin: "0px 0px 0px 5px", padding: 0 }} // Adjusted styles
+            >
+                <SendIcon />
+            </IconButton>
+
             <EmojiPickerContainer ref={emojiPickerRef}>
                 {isPickerVisible && (
                     <Picker 
@@ -130,8 +167,12 @@ const NewMessageInput: React.FC = () => {
                         onEmojiSelect={handleEmojiSelect} />
                 )}
             </EmojiPickerContainer>
-            <Button id="emojiButton" onClick={handleTogglePicker} variant="contained" color="primary" style={{"backgroundColor":"black", height:"45px", margin: "5px"}}>
-                Emoji
+            <Button id="emojiButton" onClick={handleTogglePicker} 
+                variant="contained" 
+                style={{backgroundColor:"transparent", height:"45px", 
+                margin: "0px 0px", boxShadow: "none", fontSize: "25px",}} 
+                >
+                    😄
             </Button>
         </MainContainer>
     );
