@@ -24,12 +24,16 @@ const MainContainer = styled("div")({
 });
 
 
-const NameWrapper = styled("div")({
+const NameWrapper = styled("div") (({ theme }) =>({
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    flex: 1,
     marginTop: "10px",
-});
+    [theme.breakpoints.down("sm")]: {
+        marginLeft: "25px",
+      },
+}));
 
 
 const CallButtons = styled("div")({
@@ -45,16 +49,24 @@ const MessagesHeader: React.FC<{
     const navRef = useRef<HTMLDivElement>(null);
     let navPosition = navRef.current?.getBoundingClientRect().top;
 
-
-    const {auth: {userDetails}, chat: {chosenChatDetails}, room: { isUserInRoom }} = useAppSelector((state) => state);
+    // const state = useAppSelector((state) => state);
+    const {auth: {userDetails}, chat: {chosenChatDetails, chosenGroupChatDetails}, room: { isUserInRoom }} = useAppSelector((state) => state);
+    // console.log(state);
+    let name = ""
+    
+    if (chosenChatDetails?.username){
+        name = chosenChatDetails.username
+    } else if (chosenGroupChatDetails?.groupName) {
+        name = chosenGroupChatDetails?.groupName
+    }
 
     const navActiveStyle = scrollPosition >= navPosition! ? { backgroundColor: "#3b3486" } : { backgroundColor: "transparent" }; 
 
 
     return (
         <MainContainer style={navActiveStyle} ref={navRef}>
-            {/* <NameWrapper>
-                <Avatar username={chosenChatDetails?.username!} />
+            <NameWrapper>
+                <Avatar username={name} />
                 <Typography
                     variant="h4"
                     sx={{
@@ -64,10 +76,11 @@ const MessagesHeader: React.FC<{
                         marginRight: "5px",
                     }}
                 >
-                    {chosenChatDetails?.username}
+                    {name}
                 </Typography>
-            </NameWrapper> */}
-
+            </NameWrapper>
+            
+            {/* <Avatar username={name} /> */}
             {chosenChatDetails && (
                 <CallButtons>
                     <IconButton
