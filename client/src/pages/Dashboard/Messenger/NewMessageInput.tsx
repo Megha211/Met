@@ -45,43 +45,34 @@ const NewMessageInput: React.FC = () => {
     const onFocus = () => setFocused(true);
     const onBlur = () => setFocused(false);
 
-    const handleSendMessage = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
-            if (chosenChatDetails) {
-                sendDirectMessage({
-                    message,
-                    receiverUserId: chosenChatDetails.userId!,
-                });
-            }
-
-            if (chosenGroupChatDetails) {
-                sendGroupMessage({
-                    message,
-                    groupChatId: chosenGroupChatDetails.groupId
-                });
-            }
-
-            setMessage("");
-        }
-    };
-
-    const handleSendMessageButton = () => {
+    const sendMessage = () => {
         if (chosenChatDetails) {
             sendDirectMessage({
                 message,
                 receiverUserId: chosenChatDetails.userId!,
             });
         }
-
+    
         if (chosenGroupChatDetails) {
             sendGroupMessage({
                 message,
                 groupChatId: chosenGroupChatDetails.groupId
             });
         }
-
+    
         setMessage("");
     };
+    
+    const handleSendMessage = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            sendMessage();
+        }
+    };
+    
+    const handleSendMessageButton = () => {
+        sendMessage();
+    };
+    
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMessage(e.target.value)
