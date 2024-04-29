@@ -20,11 +20,11 @@ const CreateGroupChatButton = () => {
                 style={{
                     color: "white",
                     fontSize: "25px",
-                    marginTop: "16px",
+                    marginTop: "2px",
                     display: "flex",
                     alignItems: "center",
                     gap: "10px",
-                    marginLeft: "5px" 
+                    marginLeft: "27px" 
                 }} > + </Button>
             <CreateGroupChatDialog
                 isDialogOpen={isDialogOpen}

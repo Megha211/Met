@@ -97,12 +97,13 @@ export default function ResponsiveDrawer(props: Props) {
                     justifyContent: "space-between",
                     width:"230px"
                 }}>    
-                    <FriendsTitle title="Search Chat" />
                     {/* <CreateRoomButton isUserInRoom={props.isUserInRoom} /> */}
                 </div>
                 {/* <ActiveRooms /> */}
-                <SearchButton onSearchChange={handleSearchChange}/>
             </div>
+            <Divider />
+            <FriendsTitle title="Search Chat" />
+            <SearchButton onSearchChange={handleSearchChange} />
             <Divider />
             <div className="friend" style={{
                 display: "flex",

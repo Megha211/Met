@@ -6,7 +6,7 @@ import { Button, IconButton } from "@mui/material";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
 import SendIcon from '@mui/icons-material/Send';
-
+import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
 const MainContainer = styled("div")({
     height: "60px",
     width: "100%",
@@ -140,7 +140,41 @@ const NewMessageInput: React.FC = () => {
                 onKeyDown={handleSendMessage}
                 onFocus={onFocus}
                 onBlur={onBlur}
+                style={{
+                    margin: "0px 0px 0px 10px",
+                    position: "relative", // Added to make the button position relative to the input
+                }}
             />
+                {/* Emoji Button */}
+                <Button 
+                    id="emojiButton" 
+                    onClick={handleTogglePicker} 
+                    variant="contained" 
+                    style={{
+                        backgroundColor: "transparent", 
+                        height: "45px", 
+                        boxShadow: "none", 
+                        fontSize: "25px",
+                        position: "absolute", // Positioned absolutely within the input
+                        right: "15px", // Adjust the position as needed
+                        top: "50%", // Center vertically
+                        transform: "translateY(-50%)", // Center vertically
+                    }} 
+                >
+                <EmojiEmotionsOutlinedIcon/>
+                </Button>
+
+                {/* Emoji Picker */}
+                <EmojiPickerContainer ref={emojiPickerRef}>
+                    {isPickerVisible && (
+                        <Picker 
+                            data={data} 
+                            previewPosition="none" 
+                            onEmojiSelect={handleEmojiSelect} 
+                        />
+                    )}
+                </EmojiPickerContainer>
+
             {/* <Button variant="contained" 
                 color="primary" 
                 onClick={handleSendMessageButton}
@@ -158,22 +192,6 @@ const NewMessageInput: React.FC = () => {
             >
                 <SendIcon />
             </IconButton>
-
-            <EmojiPickerContainer ref={emojiPickerRef}>
-                {isPickerVisible && (
-                    <Picker 
-                        data={data} 
-                        previewPosition="none" 
-                        onEmojiSelect={handleEmojiSelect} />
-                )}
-            </EmojiPickerContainer>
-            <Button id="emojiButton" onClick={handleTogglePicker} 
-                variant="contained" 
-                style={{backgroundColor:"transparent", height:"45px", 
-                margin: "0px 0px", boxShadow: "none", fontSize: "25px",}} 
-                >
-                    😄
-            </Button>
         </MainContainer>
     );
 };

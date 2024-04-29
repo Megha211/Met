@@ -15,7 +15,7 @@ const CreateRoomButton = ({ isUserInRoom }: { isUserInRoom: boolean }) => {
             style={{
                 color: "white",
                 fontSize: "25px",
-                marginTop: "16px",
+                marginTop: "2px",
                 display: "flex",
                 alignItems: "center",
                 gap: "10px",

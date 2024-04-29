@@ -18,11 +18,16 @@ function SearchButton({ onSearchChange }: Props) {
 
     return (
         <div>
-            <div style={{ marginTop: "10px" }}>
+            <div style={{ margin: "10px" }}>
                 <InputBase
                     placeholder="Search..."
                     inputProps={{ "aria-label": "search" }}
-                    sx={{ backgroundColor: "white", borderRadius: "4px", padding: "8px" }}
+                    sx={{ 
+                        backgroundColor: "rgba(255, 255, 255, 0.13)",
+                        border: "1px solid #4a4aae", 
+                        borderRadius: "4px", 
+                        padding: "8px", 
+                    }}
                     onChange={handleInputChange}
                 />
             </div>

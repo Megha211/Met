@@ -20,11 +20,11 @@ const AddFriendButton = () => {
                 textTransform: "uppercase",
                 color: "white",
                 fontSize: "25px",
-                marginTop: "16px",
+                marginTop: "2px",
                 display: "flex",
                 alignItems: "center",
                 gap: "10px",
-                marginLeft: "45px" 
+                marginLeft: "70px" 
               }}
               onClick={handleOpenAddFriendDialog}
           >
