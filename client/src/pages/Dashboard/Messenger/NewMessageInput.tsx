@@ -92,26 +92,26 @@ const NewMessageInput: React.FC = () => {
         setPickerVisible(false); // Close the picker after selecting an emoji
     };
 
-    const handleClickOutsidePicker = (event: MouseEvent) => {
-        const emojiButton = document.querySelector("#emojiButton"); // Assuming the button has an id "emojiButton"
+    // const handleClickOutsidePicker = (event: MouseEvent) => {
+    //     const emojiButton = document.querySelector("#emojiButton"); // Assuming the button has an id "emojiButton"
     
-        if (
-            emojiPickerRef.current &&
-            !emojiPickerRef.current.contains(event.target as Node) &&
-            event.target !== emojiButton
-        ) {
-            setPickerVisible(false);
-        }
-    };
+    //     if (
+    //         emojiPickerRef.current &&
+    //         !emojiPickerRef.current.contains(event.target as Node) &&
+    //         event.target !== emojiButton
+    //     ) {
+    //         setPickerVisible(false);
+    //     }
+    // };
     
 
-    useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutsidePicker);
+    // useEffect(() => {
+    //     document.addEventListener("mousedown", handleClickOutsidePicker);
 
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutsidePicker);
-        };
-    }, []);
+    //     return () => {
+    //         document.removeEventListener("mousedown", handleClickOutsidePicker);
+    //     };
+    // }, []);
 
     useEffect(() => {
         if (chosenChatDetails?.userId) {
@@ -147,7 +147,7 @@ const NewMessageInput: React.FC = () => {
                         boxShadow: "none", 
                         fontSize: "25px",
                         position: "absolute", // Positioned absolutely within the input
-                        right: "15px", // Adjust the position as needed
+                        right: "27px", // Adjust the position as needed
                         top: "50%", // Center vertically
                         transform: "translateY(-50%)", // Center vertically
                     }} 
@@ -179,7 +179,7 @@ const NewMessageInput: React.FC = () => {
                 id="sendButton"
                 onClick={handleSendMessageButton}
                 aria-label="send"
-                style={{ color: "white", margin: "0px 0px 0px 5px", padding: 0 }} // Adjusted styles
+                style={{ color: "white", margin: "0px 5px 0px 0px", paddingRight: "3px" }} // Adjusted styles
             >
                 <SendIcon />
             </IconButton>

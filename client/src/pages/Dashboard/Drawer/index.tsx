@@ -88,7 +88,7 @@ export default function ResponsiveDrawer(props: Props) {
                     <FriendsTitle title="Active Rooms" />
                     <CreateRoomButton isUserInRoom={props.isUserInRoom} />
                 </div>
-                {isUserInRoom && <ActiveRooms />}
+                <ActiveRooms />
             </div>
             <Divider />
             <div className="search">
@@ -96,12 +96,9 @@ export default function ResponsiveDrawer(props: Props) {
                     display: "flex",
                     justifyContent: "space-between",
                     width:"230px"
-                }}>    
-                    {/* <CreateRoomButton isUserInRoom={props.isUserInRoom} /> */}
+                }}>
                 </div>
-                {/* <ActiveRooms /> */}
             </div>
-            <Divider />
             <FriendsTitle title="Search Chat" />
             <SearchButton onSearchChange={handleSearchChange} />
             <Divider />

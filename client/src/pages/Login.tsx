@@ -190,6 +190,10 @@ const Login = () => {
               background: "#3b3486",
               borderRadius: "30px",
               transition: ".3s",
+              '@media (max-width:600px)': {
+                width:"fit-content",
+                height: "55%",
+              },
             }}
             disabled={!isFormValid}
             onClick={handleLogin}
