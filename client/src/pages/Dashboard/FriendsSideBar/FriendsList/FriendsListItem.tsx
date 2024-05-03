@@ -56,6 +56,7 @@ const FriendsListItem = ({
                     position: "relative",
                     borderRadius: "10px",
                     backgroundColor: isChatActive ? "rgba(255, 255, 255, 0.13)" : "transparent",
+                    padding: "10px auto",
                 }}
             >
                 {matches && <Avatar username={username} />}
@@ -73,6 +74,7 @@ const FriendsListItem = ({
                             marginLeft: "7px",
                             fontWeight: 700,
                             color: "#8e9297",
+                            lineHeight: "1.1",
                         }}
                         variant="subtitle1"
                         align="left"

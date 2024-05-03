@@ -27,6 +27,8 @@ function SearchButton({ onSearchChange }: Props) {
                         border: "1px solid #4a4aae", 
                         borderRadius: "4px", 
                         padding: "8px", 
+                        color: "white",
+
                     }}
                     onChange={handleInputChange}
                 />
