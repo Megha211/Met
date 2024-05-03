@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Typography } from "@mui/material";
@@ -56,24 +57,22 @@ const Login = () => {
     password: "",
   });
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isRecaptchaCompleted, setIsRecaptchaCompleted] = useState(false);
 
-  const { error, errorMessage, userDetails } = useAppSelector(
-    (state) => state.auth
-  );
-  // asdasdasd
+  const { userDetails } = useAppSelector((state) => state.auth);
 
-  let handleCallbackResponse = (response: any) => {
+  const handleCallbackResponse = (response: any) => {
     console.log(response.credential);
-    let userObject = jwtDecode(response.credential) as {
+    const userObject = jwtDecode(response.credential) as {
       email: string;
       name: string;
-    }; // Add type annotation to userObject
-    console.log(userObject.name); // Access email property correctly
+      };
+    console.log(userObject.name);
 
-    handleGoogleLogin({
-      email: userObject.email,
-      name: userObject.name,
-    });
+    // handleGoogleLogin({
+    //   email: userObject.email,
+    //   name: userObject.name,
+    // });
     document.getElementById("signInDiv")!.hidden = true;
   };
 
@@ -93,34 +92,48 @@ const Login = () => {
     );
     window.google.accounts.id.prompt();
   }, []);
-  // asidiosd
+
+  const onChange = (value: any) => {
+    console.log("Captcha value:", value);
+    setIsRecaptchaCompleted(true);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredentials({
       ...credentials,
       [e.target.name]: e.target.value,
     });
+    setIsFormValid(
+      validateLoginForm({
+        ...credentials,
+        [e.target.name]: e.target.value,
+      }) && isRecaptchaCompleted
+    );
   };
 
   const handleLogin = () => {
-    console.log("credentials", credentials);
-    dispatch(loginUser(credentials));
-  };
-
-  const handleGoogleLogin = (args: any) => {
-    dispatch(googleLogin(args));
+    if (isFormValid) {
+      console.log("credentials", credentials);
+      dispatch(loginUser(credentials));
+    } else {
+      console.log(
+        "Please fill in all fields and complete reCAPTCHA correctly"
+      );
+    }
   };
 
   useEffect(() => {
-    setIsFormValid(validateLoginForm(credentials));
-  }, [credentials]);
+    setIsFormValid(
+      validateLoginForm(credentials) && isRecaptchaCompleted
+    );
+  }, [credentials, isRecaptchaCompleted]);
 
   useEffect(() => {
     if (userDetails?.token) {
       navigate("/dashboard");
     }
   }, [userDetails, navigate]);
-
+  
   return (
     <AuthBox>
       <Typography
@@ -169,6 +182,10 @@ const Login = () => {
         />
       </Wrapper>
 
+      <ReCAPTCHA
+        sitekey="6Lcu3MspAAAAAM3H1E5WHzW7Cvo2r3GwAe5Hx8Le"
+        onChange={onChange}
+      />
       <Tooltip
         title={
           isFormValid
@@ -190,10 +207,6 @@ const Login = () => {
               background: "#3b3486",
               borderRadius: "30px",
               transition: ".3s",
-              '@media (max-width:600px)': {
-                width:"fit-content",
-                height: "55%",
-              },
             }}
             disabled={!isFormValid}
             onClick={handleLogin}
@@ -233,6 +246,7 @@ const Login = () => {
         </div>
       </Tooltip>
 
+      {/* Register link */}
       <Typography sx={{ color: "#000" }} variant="subtitle2">
         {`Don't have an account? `}
         <RedirectText onClick={() => navigate("/register")}>
@@ -242,5 +256,5 @@ const Login = () => {
     </AuthBox>
   );
 };
-// megha
+
 export default Login;

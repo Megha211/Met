@@ -1,7 +1,7 @@
 {
-  "name": "discord-clone-backend",
+  "name": "met-app-backend",
   "version": "1.0.0",
-  "description": "Backend of discord clone",
+  "description": "met-app-backend",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
