@@ -69,10 +69,10 @@ const Login = () => {
       };
     console.log(userObject.name);
 
-    // handleGoogleLogin({
-    //   email: userObject.email,
-    //   name: userObject.name,
-    // });
+    handleGoogleLogin({
+      email: userObject.email,
+      name: userObject.name,
+    });
     document.getElementById("signInDiv")!.hidden = true;
   };
 
@@ -122,6 +122,10 @@ const Login = () => {
     }
   };
 
+  const handleGoogleLogin = (args: any) => {
+    dispatch(googleLogin(args));
+  };
+  
   useEffect(() => {
     setIsFormValid(
       validateLoginForm(credentials) && isRecaptchaCompleted
