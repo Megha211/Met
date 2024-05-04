@@ -189,6 +189,9 @@ const Login = () => {
       <ReCAPTCHA
         sitekey="6Lcu3MspAAAAAM3H1E5WHzW7Cvo2r3GwAe5Hx8Le"
         onChange={onChange}
+        style={{
+          margin:"10px 15px 0 15px",
+        }}
       />
       <Tooltip
         title={
@@ -203,7 +206,7 @@ const Login = () => {
             sx={{
               display: "inline-block",
               width: "24vw",
-              margin: "15px 0 5px 25px",
+              margin: "15px 0 15px 25px",
               color: "white",
               fontSize: "16px",
               letterSpacing: "1px",
@@ -246,7 +249,11 @@ const Login = () => {
           >
             
           </Button> */}
-          <div id="signInDiv"></div>
+          <div id="signInDiv"
+          style={{
+            margin:"10px 15px 10px 15px",
+          }}
+          ></div>
         </div>
       </Tooltip>
 

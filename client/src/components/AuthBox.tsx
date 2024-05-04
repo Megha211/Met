@@ -107,7 +107,7 @@ const AuthBox: React.FC<AuthBoxProps> = (props) => {
             width: "70%",
             height: "55%",
           },
-          height: "50%",
+          height: "60%",
           borderRadius: "50px",
           display: "flex",
           flexDirection: "column",
