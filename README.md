@@ -17,6 +17,7 @@ You can access a live demo of Met [here](https://met-snowy.vercel.app/).
 
 - **User Authentication:** Secure user authentication and authorization.
 - **Google Authentication:** Google Signin for ease of login for users.
+- **CAPTCHA Verification:** During login to enhance security and prevent automated bot attacks.
 - **Audio and Video Chat:** High-quality peer-to-peer audio and video calls.
 - **Messaging:** Real-time messaging with message storage in the database.
 - **Invitations:** Send and receive invitations for calls and chats.
