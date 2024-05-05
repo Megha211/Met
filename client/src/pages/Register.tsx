@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
+import ReCAPTCHA from "react-google-recaptcha";
 import { styled } from "@mui/system";
 import { Tooltip } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -44,18 +45,16 @@ const RedirectText = styled("span")({
 
 const Register = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
     username: "",
   });
   const [isFormValid, setIsFormValid] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState("");
 
-  const { error, errorMessage, userDetails } = useAppSelector(
-    (state) => state.auth
-  );
-
-  const dispatch = useDispatch();
+  const { userDetails } = useAppSelector((state) => state.auth);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredentials({
@@ -65,18 +64,31 @@ const Register = () => {
   };
 
   const handleRegister = () => {
-    dispatch(registerUser(credentials));
+    if (isFormValid) {
+      dispatch(registerUser(credentials));
+    } else {
+      console.log(
+        "Please fill in all fields and complete reCAPTCHA correctly"
+      );
+    }
   };
 
   useEffect(() => {
-    setIsFormValid(validateRegisterForm(credentials));
-  }, [credentials]);
+    setIsFormValid(validateRegisterForm(credentials) && !!recaptchaToken);
+  }, [credentials, recaptchaToken]);
 
   useEffect(() => {
     if (userDetails?.token) {
       navigate("/dashboard");
     }
   }, [userDetails, navigate]);
+
+  const onChange = (value: string | null) => {
+    if (value) {
+      console.log("Captcha value:", value);
+      setRecaptchaToken(value);
+    }
+  };
 
   return (
     <AuthBox>
@@ -107,7 +119,7 @@ const Register = () => {
       <Wrapper>
         <Label>Username</Label>
         <Input
-          type="email"
+          type="text"
           placeholder="Enter your username"
           name="username"
           value={credentials.username}
@@ -137,6 +149,10 @@ const Register = () => {
         />
       </Wrapper>
 
+      <ReCAPTCHA
+        sitekey="6Lcu3MspAAAAAM3H1E5WHzW7Cvo2r3GwAe5Hx8Le"
+        onChange={onChange}
+      />
       <Tooltip
         title={
           isFormValid
@@ -144,7 +160,7 @@ const Register = () => {
             : "Enter correct email address. Password should be greater than six characters and username should be between 3 and 12 characters!"
         }
       >
-        <div style={{ display:"flex" , justifyContent:"center" }}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <Button
             variant="contained"
             sx={{
