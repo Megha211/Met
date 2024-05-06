@@ -109,13 +109,13 @@ const NewMessageInput: React.FC = () => {
       }
   };
 
-  // useEffect(() => {
-  //     document.addEventListener("mousedown", handleClickOutsidePicker);
+  useEffect(() => {
+      document.addEventListener("mousedown", handleClickOutsidePicker);
 
-  //     return () => {
-  //         document.removeEventListener("mousedown", handleClickOutsidePicker);
-  //     };
-  // }, []);
+      return () => {
+          document.removeEventListener("mousedown", handleClickOutsidePicker);
+      };
+  }, []);
 
   useEffect(() => {
     if (chosenChatDetails?.userId) {
@@ -152,16 +152,16 @@ const NewMessageInput: React.FC = () => {
         variant="contained"
         style={{
           backgroundColor: "transparent",
-          height: "45px",
+          height: "40px",
           boxShadow: "none",
-          fontSize: "25px",
+          fontSize: "32px",
           position: "absolute", // Positioned absolutely within the input
           right: "27px", // Adjust the position as needed
-          top: "50%", // Center vertically
-          transform: "translateY(-50%)", // Center vertically
+          bottom: "12px"
         }}
       >
-        <EmojiEmotionsOutlinedIcon />
+        {/* <EmojiEmotionsOutlinedIcon /> */}
+        ☺
       </Button>
 
       {/* Emoji Picker */}
