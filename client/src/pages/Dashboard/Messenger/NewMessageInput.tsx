@@ -10,7 +10,7 @@ import { Button, IconButton } from "@mui/material";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
 import SendIcon from "@mui/icons-material/Send";
-import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined";
+
 const MainContainer = styled("div")({
   height: "60px",
   width: "100%",
@@ -86,6 +86,10 @@ const NewMessageInput: React.FC = () => {
   const handleTogglePicker = () => {
     if (isPickerVisible) {
       setPickerVisible(false);
+      const input = inputRef.current;
+      input?.focus(); // Set focus back to the input field
+      input?.setSelectionRange(input.value.length, input.value.length); // Set cursor position to the end
+
     } else {
       setPickerVisible(true);
     }
@@ -94,28 +98,49 @@ const NewMessageInput: React.FC = () => {
   const handleEmojiSelect = (emojiObject: any) => {
     const emoji = emojiObject.native;
     setMessage((prevMessage) => prevMessage + emoji);
-    setPickerVisible(false); // Close the picker after selecting an emoji
+    // setPickerVisible(false); 
   };
 
   const handleClickOutsidePicker = (event: MouseEvent) => {
-      const emojiButton = document.querySelector("#emojiButton"); // Assuming the button has an id "emojiButton"
-
-      if (
-          emojiPickerRef.current &&
-          !emojiPickerRef.current.contains(event.target as Node) &&
-          event.target !== emojiButton
-      ) {
-          setPickerVisible(false);
-      }
+    const emojiButton = document.querySelector("#emojiButton");
+  
+    if (
+      emojiPickerRef.current &&
+      !emojiPickerRef.current.contains(event.target as Node) &&
+      event.target !== emojiButton
+    ) {
+      setPickerVisible(false);
+      const input = inputRef.current;
+      input?.focus(); // Set focus back to the input field
+      input?.setSelectionRange(input.value.length, input.value.length); // Set cursor position to the end
+    }
   };
-
+  
+  const handleTouchOutsidePicker = (event: TouchEvent) => {
+    const emojiButton = document.querySelector("#emojiButton");
+  
+    if (
+      emojiPickerRef.current &&
+      !emojiPickerRef.current.contains(event.target as Node) &&
+      event.target !== emojiButton
+    ) {
+      setPickerVisible(false);
+      const input = inputRef.current;
+      input?.focus(); // Set focus back to the input field
+      input?.setSelectionRange(input.value.length, input.value.length); // Set cursor position to the end
+    }
+  };
+  
   useEffect(() => {
-      document.addEventListener("mousedown", handleClickOutsidePicker);
-
-      return () => {
-          document.removeEventListener("mousedown", handleClickOutsidePicker);
-      };
+    document.addEventListener("mousedown", handleClickOutsidePicker);
+    document.addEventListener("touchstart", handleTouchOutsidePicker);
+  
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsidePicker);
+      document.removeEventListener("touchstart", handleTouchOutsidePicker);
+    };
   }, []);
+  
 
   useEffect(() => {
     if (chosenChatDetails?.userId) {
@@ -127,9 +152,12 @@ const NewMessageInput: React.FC = () => {
     setPickerVisible(false)
   }, [focused, chosenChatDetails?.userId, chosenChatDetails]);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   return (
     <MainContainer >
       <Input
+        ref={inputRef}
         placeholder={
           chosenChatDetails
             ? `Write message to ${chosenChatDetails.username}`
@@ -154,7 +182,7 @@ const NewMessageInput: React.FC = () => {
           backgroundColor: "transparent",
           height: "40px",
           boxShadow: "none",
-          fontSize: "32px",
+          fontSize: "28px",
           position: "absolute", // Positioned absolutely within the input
           right: "27px", // Adjust the position as needed
           bottom: "12px"
