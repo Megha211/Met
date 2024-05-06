@@ -110,9 +110,6 @@ const NewMessageInput: React.FC = () => {
       event.target !== emojiButton
     ) {
       setPickerVisible(false);
-      const input = inputRef.current;
-      input?.focus(); // Set focus back to the input field
-      input?.setSelectionRange(input.value.length, input.value.length); // Set cursor position to the end
     }
   };
   
@@ -125,9 +122,6 @@ const NewMessageInput: React.FC = () => {
       event.target !== emojiButton
     ) {
       setPickerVisible(false);
-      const input = inputRef.current;
-      input?.focus(); // Set focus back to the input field
-      input?.setSelectionRange(input.value.length, input.value.length); // Set cursor position to the end
     }
   };
   
